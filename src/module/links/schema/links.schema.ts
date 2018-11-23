@@ -15,7 +15,7 @@ export const LinksSchema = new Mongoose.Schema({
 LinksSchema.plugin(mongoosePaginate);
 
 LinksSchema.plugin(autoIncrement.plugin, {
-  model: 'Link',
+  model: 'Links',
   field: 'id',
   startAt: 1,
   incrementBy: 1

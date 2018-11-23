@@ -36,6 +36,7 @@
     "@nestjs/core": "^5.0.0",
     "@nestjs/graphql": "^5.4.0",
     "@nestjs/mongoose": "^5.2.2",
+    "@nestjs/typeorm": "^5.2.2",
     "apollo-server-express": "^2.2.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
@@ -65,7 +66,8 @@
     "redis": "^2.8.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.3.2",
-    "rxjs-compat": "^6.3.2"
+    "rxjs-compat": "^6.3.2",
+    "typeorm": "^0.2.9"
   },
   "devDependencies": {
     "@nestjs/testing": "^5.3.1",

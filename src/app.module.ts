@@ -13,6 +13,8 @@ import { BlogLoggerModule } from './module/common/logger/logger.module';
 import { BlogLogger } from './module/common/logger/logger';
 import { LinksModule } from './module/links/links.module';
 
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 @Module({
   imports: [
     CacheModule.register({
@@ -30,13 +32,26 @@ import { LinksModule } from './module/links/links.module';
         }
       })
     }),
-    MongooseModule.forRoot(config.MONGO_URL),
-    AuthModule,
-    HttpModule,
-    OptionsModule,
-    QiniuModule,
-    BlogLoggerModule,
-    LinksModule
+    TypeOrmModule.forRootAsync({
+      useFactory: () => {
+        return {
+          type: 'mongodb',
+          host: '127.0.0.1',
+          port: 27017,
+          username: 'blog-server',
+          password: 'blog-server',
+          database: 'my_blog',
+          entities: ['src/**/**.entity{.ts,.js}'],
+          synchronize: true
+        };
+      }
+    })
+    // MongooseModule.forRoot(config.MONGO_URL),
+    // AuthModul
+    // OptionsModule,
+    // QiniuModule,
+    // BlogLoggerModule,
+    // LinksModule
   ],
   providers: [
     // {
