@@ -27,7 +27,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         typePaths: ['./**/*.graphql'],
         path: '/api/v2',
         formatError: (error: Error) => {
-          logger.error(JSON.stringify(error));
+          // console.log(error);
+          // logger.error(error);
           return error;
         }
       })
@@ -45,9 +46,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
           synchronize: true
         };
       }
-    })
+    }),
     // MongooseModule.forRoot(config.MONGO_URL),
-    // AuthModul
+    AuthModule
     // OptionsModule,
     // QiniuModule,
     // BlogLoggerModule,

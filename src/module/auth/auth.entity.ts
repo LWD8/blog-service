@@ -3,7 +3,7 @@ import { config } from '@/config';
 import crypto from 'crypto';
 
 @Entity()
-export class AuthEntity {
+export class Auths {
   @ObjectIdColumn()
   public _id: ObjectID;
 

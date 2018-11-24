@@ -4,17 +4,23 @@ import { Model } from 'mongoose';
 import { AuthInterface } from './interface/auth.interface';
 import { InjectModel } from '@nestjs/mongoose';
 import { InfoDto, AuthDto } from './dto/auth.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Auths } from './auth.entity';
+import { MongoRepository, Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel('Auth') private readonly authModel: Model<AuthInterface>) {}
+  constructor(
+    // @InjectModel('Auth') private readonly authModel: Model<AuthInterface>
+    @InjectRepository(Auths) private readonly authRepository: Repository<Auths>
+  ) {}
 
   /**
    * 根据用户名查找用户
    * @param username 用户名
    */
-  public async findOne(info?: InfoDto) {
-    return await this.authModel.findOne({ ...info });
+  public findOne(info?: InfoDto) {
+    return this.authRepository.findOne({ ...info });
   }
 
   /**
@@ -22,10 +28,10 @@ export class AuthService {
    * @param auth { username password }
    */
   public async create(auth: AuthDto) {
-    return await this.authModel.create(auth);
+    return await this.authRepository.create(auth);
   }
 
   public async update(auth: InfoDto) {
-    return this.authModel.findOneAndUpdate(auth._id, auth, { new: true });
+    return this.authRepository.findOneAndUpdate(auth._id, auth, { new: true });
   }
 }

@@ -7,8 +7,11 @@ import { Model } from 'mongoose';
 import { AuthInterface } from './interface/auth.interface';
 import { config } from '@/config';
 import { md5Decode } from '@/common/utils';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Auths } from './auth.entity';
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Auth', schema: AuthSchema }])],
+  // imports: [MongooseModule.forFeature([{ name: 'Auth', schema: AuthSchema }])],
+  imports: [TypeOrmModule.forFeature([Auths])],
   providers: [AuthService, AuthResolvers]
 })
 export class AuthModule implements OnModuleInit {
