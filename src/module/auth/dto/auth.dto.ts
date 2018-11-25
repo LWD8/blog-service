@@ -25,3 +25,8 @@ export class InfoDto {
 export class InfoRequredDto extends InfoDto {
   public oldPassword: string;
 }
+
+export class InfoRequerdIdDto extends InfoDto {
+  public _id: string;
+  public oldPassword: string;
+}

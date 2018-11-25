@@ -10,7 +10,6 @@ const logger = new Logger();
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
   public catch(exception: HttpException, host: ArgumentsHost) {
-    console.log(host);
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest();

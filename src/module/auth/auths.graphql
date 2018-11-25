@@ -23,7 +23,7 @@ input InfoInput {
 }
 
 type UserInfo {
-  _id: ID
+  _id: ObjectID
   name: String
   username: String
   slogan: String
@@ -32,3 +32,4 @@ type UserInfo {
 }
 
 scalar Date
+scalar ObjectID

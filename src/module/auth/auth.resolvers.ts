@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 
 import { md5Decode, createToken } from '@/common/utils';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { AuthDto, InfoDto, InfoRequredDto } from './dto/auth.dto';
+import { AuthDto, InfoRequerdIdDto } from './dto/auth.dto';
 import { Info } from './decorators/auth';
 
 @Resolver('Auth')
@@ -36,8 +36,9 @@ export class AuthResolvers {
   }
 
   @Mutation()
-  public async updateUserInfo(@Info() userInfo: InfoRequredDto) {
+  public async updateUserInfo(@Info() userInfo: InfoRequerdIdDto) {
     const auth = await this.authService.findOne({ _id: userInfo._id });
+    console.log(auth);
     if (auth) {
       if (auth.password !== md5Decode(userInfo.oldPassword)) {
         throw new UnauthorizedException('Password wrong');

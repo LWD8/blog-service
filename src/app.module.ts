@@ -27,8 +27,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         typePaths: ['./**/*.graphql'],
         path: '/api/v2',
         formatError: (error: Error) => {
-          // console.log(error);
-          // logger.error(error);
+          // logger.error(error.message);
           return error;
         }
       })

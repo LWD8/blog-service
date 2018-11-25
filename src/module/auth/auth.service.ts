@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { Model } from 'mongoose';
-import { AuthInterface } from './interface/auth.interface';
 import { InjectModel } from '@nestjs/mongoose';
-import { InfoDto, AuthDto } from './dto/auth.dto';
+import { InfoDto, AuthDto, InfoRequerdIdDto } from './dto/auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Auths } from './auth.entity';
 import { MongoRepository, Repository } from 'typeorm';
@@ -20,6 +18,9 @@ export class AuthService {
    * @param username 用户名
    */
   public findOne(info?: InfoDto) {
+    if (info && info._id) {
+      return this.authRepository.findOne(info._id);
+    }
     return this.authRepository.findOne({ ...info });
   }
 
@@ -31,7 +32,12 @@ export class AuthService {
     return await this.authRepository.create(auth);
   }
 
-  public async update(auth: InfoDto) {
-    return this.authRepository.findOneAndUpdate(auth._id, auth, { new: true });
+  public async update(auth: InfoRequerdIdDto) {
+    const id = auth._id;
+    delete auth._id;
+    const result = await this.authRepository.update(id, auth);
+    console.log(result);
+    return result;
+    // return this.authRepository.findOneAndUpdate(auth._id, auth, { new: true });
   }
 }
