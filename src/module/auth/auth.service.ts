@@ -4,14 +4,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import { InfoDto, AuthDto, InfoRequerdIdDto } from './dto/auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Auths } from './auth.entity';
-import { MongoRepository, Repository } from 'typeorm';
+import { MongoRepository } from 'typeorm';
+
+import { ObjectID } from 'mongodb';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    // @InjectModel('Auth') private readonly authModel: Model<AuthInterface>
-    @InjectRepository(Auths) private readonly authRepository: Repository<Auths>
-  ) {}
+  constructor(@InjectRepository(Auths) private readonly authRepository: MongoRepository<Auths>) {}
 
   /**
    * 根据用户名查找用户
@@ -21,6 +20,7 @@ export class AuthService {
     if (info && info._id) {
       return this.authRepository.findOne(info._id);
     }
+    // @ts-ignore
     return this.authRepository.findOne({ ...info });
   }
 
@@ -35,9 +35,12 @@ export class AuthService {
   public async update(auth: InfoRequerdIdDto) {
     const id = auth._id;
     delete auth._id;
-    const result = await this.authRepository.update(id, auth);
-    console.log(result);
-    return result;
+    const result = await this.authRepository.findOneAndUpdate(
+      { _id: new ObjectID(id) },
+      { $set: auth },
+      { returnOriginal: false }
+    );
+    return result.value;
     // return this.authRepository.findOneAndUpdate(auth._id, auth, { new: true });
   }
 }

@@ -1,4 +1,4 @@
-import { Entity, Column, ObjectIdColumn, ObjectID } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, ObjectID, PrimaryGeneratedColumn } from 'typeorm';
 import { config } from '@/config';
 import crypto from 'crypto';
 
@@ -6,6 +6,9 @@ import crypto from 'crypto';
 export class Auths {
   @ObjectIdColumn()
   public _id: ObjectID;
+
+  @PrimaryGeneratedColumn()
+  public id: number;
 
   @Column({
     default: ''

@@ -38,7 +38,6 @@ export class AuthResolvers {
   @Mutation()
   public async updateUserInfo(@Info() userInfo: InfoRequerdIdDto) {
     const auth = await this.authService.findOne({ _id: userInfo._id });
-    console.log(auth);
     if (auth) {
       if (auth.password !== md5Decode(userInfo.oldPassword)) {
         throw new UnauthorizedException('Password wrong');

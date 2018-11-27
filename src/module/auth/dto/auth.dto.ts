@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { ObjectID } from 'typeorm';
 
 export class AuthDto {
   @IsString()
