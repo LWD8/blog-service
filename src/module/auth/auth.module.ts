@@ -10,7 +10,6 @@ import { md5Decode } from '@/common/utils';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Auths } from './auth.entity';
 @Module({
-  // imports: [MongooseModule.forFeature([{ name: 'Auth', schema: AuthSchema }])],
   imports: [TypeOrmModule.forFeature([Auths])],
   providers: [AuthService, AuthResolvers]
 })

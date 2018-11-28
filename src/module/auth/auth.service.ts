@@ -41,6 +41,5 @@ export class AuthService {
       { returnOriginal: false }
     );
     return result.value;
-    // return this.authRepository.findOneAndUpdate(auth._id, auth, { new: true });
   }
 }

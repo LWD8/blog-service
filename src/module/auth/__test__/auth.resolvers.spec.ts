@@ -10,6 +10,8 @@ import { config } from '../../../config';
 
 import mongoose from 'mongoose';
 import { GraphQLModule } from '@nestjs/graphql';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Auths } from '../auth.entity';
 
 // const mock = jest.mock();
 
@@ -21,7 +23,7 @@ jest.mock('@/common/utils', () => {
   return { md5Decode, createToken };
 });
 
-describe('auth', () => {
+describe('authResolvers', () => {
   let app: INestApplication;
 
   describe('success', () => {
@@ -50,6 +52,8 @@ describe('auth', () => {
       })
         .overrideProvider(AuthService)
         .useValue(authService)
+        .overrideProvider(getRepositoryToken(Auths))
+        .useValue({})
         .compile();
 
       app = await module.createNestApplication().init();
@@ -185,6 +189,8 @@ describe('auth', () => {
       })
         .overrideProvider(AuthService)
         .useValue(authService)
+        .overrideProvider(getRepositoryToken(Auths))
+        .useValue({})
         .compile();
 
       app = await module.createNestApplication().init();
