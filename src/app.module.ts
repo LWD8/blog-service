@@ -47,8 +47,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       }
     }),
     // MongooseModule.forRoot(config.MONGO_URL),
-    AuthModule
-    // OptionsModule,
+    AuthModule,
+    OptionsModule
     // QiniuModule,
     // BlogLoggerModule,
     // LinksModule
