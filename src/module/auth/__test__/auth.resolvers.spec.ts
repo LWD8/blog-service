@@ -10,7 +10,7 @@ import { config } from '../../../config';
 
 import mongoose from 'mongoose';
 import { GraphQLModule } from '@nestjs/graphql';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { Auths } from '../auth.entity';
 
 // const mock = jest.mock();
@@ -42,7 +42,7 @@ describe('authResolvers', () => {
     beforeAll(async () => {
       const module = await Test.createTestingModule({
         imports: [
-          MongooseModule.forRoot(config.MONGO_URL),
+          TypeOrmModule.forFeature([Auths]),
           AuthModule,
           GraphQLModule.forRoot({
             typePaths: ['./**/*.graphql'],
@@ -179,7 +179,7 @@ describe('authResolvers', () => {
     beforeAll(async () => {
       const module = await Test.createTestingModule({
         imports: [
-          MongooseModule.forRoot(config.MONGO_URL),
+          TypeOrmModule.forFeature([Auths]),
           AuthModule,
           GraphQLModule.forRoot({
             typePaths: ['./**/*.graphql'],
