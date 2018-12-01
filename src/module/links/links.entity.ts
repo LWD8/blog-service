@@ -20,14 +20,12 @@ export class Links {
   @Column()
   public name: string;
 
-  @IsString()
-  @IsNotEmpty()
   @Column()
   public url: string;
 
   @CreateDateColumn()
-  public createAt: Date;
+  public create_time: Date;
 
   @UpdateDateColumn()
-  public updateAt: Date;
+  public update_time: Date;
 }

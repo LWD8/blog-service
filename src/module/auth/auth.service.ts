@@ -33,6 +33,10 @@ export class AuthService {
     return this.authRepository.save(user);
   }
 
+  /**
+   * 更新用户信息
+   * @param auth
+   */
   public async update(auth: InfoRequerdIdDto) {
     const id = auth._id;
     delete auth._id;

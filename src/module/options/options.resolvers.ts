@@ -7,11 +7,17 @@ import { OptionsDto } from './dto/options.dto';
 export class OptionsResolver {
   constructor(private readonly optionsService: OptionsService) {}
 
+  /**
+   * 获取网站信息
+   */
   @Query()
   public getOptions() {
     return this.optionsService.getOptions();
   }
 
+  /**
+   * 更新网站信息
+   */
   @Mutation()
   public updateOptions(@Info() optionsInfo: OptionsDto) {
     return this.optionsService.updateOptions(optionsInfo);

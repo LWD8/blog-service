@@ -30,11 +30,18 @@ export class AuthResolvers {
     }
   }
 
+  /**
+   * 获取用户信息
+   */
   @Query()
   public async getInfo() {
     return await this.authService.findOne();
   }
 
+  /**
+   * 更新用户信息
+   * @param userInfo InfoRequerdIdDto
+   */
   @Mutation()
   public async updateUserInfo(@Info() userInfo: InfoRequerdIdDto) {
     const auth = await this.authService.findOne({ _id: userInfo._id });

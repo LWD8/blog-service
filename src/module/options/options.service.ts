@@ -11,10 +11,17 @@ import { OptionsDto } from './dto/options.dto';
 export class OptionsService {
   constructor(@InjectRepository(Options) private readonly optionsRepository: MongoRepository<Options>) {}
 
+  /**
+   * 获取网站信息
+   */
   public getOptions() {
     return this.optionsRepository.findOne();
   }
 
+  /**
+   * 更新网站信息
+   * @param options
+   */
   public async updateOptions(options: OptionsDto) {
     if (options._id) {
       const id = options._id;
