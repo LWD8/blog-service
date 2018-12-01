@@ -16,7 +16,7 @@ export class AuthModule implements OnModuleInit {
    * 初始化创建用户
    */
   private async initUser() {
-    const auth = await this.authService.findOne({ username: config.DEFAULT_USERNAME });
+    const auth = await this.authService.findOne();
     if (!auth) {
       const password = md5Decode(config.DEFAULT_PASSWORD);
 

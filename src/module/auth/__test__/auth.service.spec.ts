@@ -2,12 +2,10 @@ import { Test } from '@nestjs/testing';
 
 import { AuthModule } from '../auth.module';
 import { AuthService } from '../auth.service';
-import { getModelToken } from '@nestjs/mongoose';
 
 import mongoose from 'mongoose';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Auths } from '../auth.entity';
-import { ObjectID } from 'typeorm';
 
 describe('authServices', () => {
   let authService: AuthService;

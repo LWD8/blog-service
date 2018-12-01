@@ -17,8 +17,6 @@ export class Links {
   @PrimaryGeneratedColumn('increment')
   public id: number;
 
-  @IsString()
-  @IsNotEmpty()
   @Column()
   public name: string;
 

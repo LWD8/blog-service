@@ -5,13 +5,12 @@ import { INestApplication } from '@nestjs/common';
 import { OptionsModule } from '../options.module';
 import { OptionsService } from '../options.service';
 
-import { MongooseModule } from '@nestjs/mongoose';
-import { config } from '../../../config';
-
 import mongoose from 'mongoose';
 import { GraphQLModule } from '@nestjs/graphql';
+import { Options } from '../options.entity';
+import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 
-describe('auth', () => {
+describe('options', () => {
   let app: INestApplication;
 
   describe('success', () => {
@@ -27,7 +26,7 @@ describe('auth', () => {
     beforeAll(async () => {
       const module = await Test.createTestingModule({
         imports: [
-          MongooseModule.forRoot(config.MONGO_URL),
+          TypeOrmModule.forFeature([Options]),
           OptionsModule,
           GraphQLModule.forRoot({
             typePaths: ['./**/*.graphql'],
@@ -37,6 +36,8 @@ describe('auth', () => {
       })
         .overrideProvider(OptionsService)
         .useValue(optionsService)
+        .overrideProvider(getRepositoryToken(Options))
+        .useValue({})
         .compile();
 
       app = await module.createNestApplication().init();
@@ -63,7 +64,7 @@ describe('auth', () => {
         .send({
           query: `
           mutation Options {
-            updateOptions(options: {id: "12345"}) {
+            updateOptions(options: {_id: "59ef13f0a3ad094f5d294da3"}) {
               url
             }
           }

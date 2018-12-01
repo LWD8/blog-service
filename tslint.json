@@ -176,6 +176,7 @@
       "allow-leading-underscore",
       "allow-trailing-underscore",
       "allow-pascal-case",
+      "allow-snake-case",
       "ban-keywords"
     ],
 

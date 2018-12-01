@@ -9,7 +9,7 @@ type Mutation {
 }
 
 type Options {
-  id: String
+  _id: ObjectID
   title: String
   sub_title: String
   keyword: String
@@ -18,10 +18,11 @@ type Options {
   email: String
   icp: String
   meta: Meta
+  update_time: Date
 }
 
 input OptionsInput {
-  id: String
+  _id: ObjectID
   title: String
   sub_title: String
   keyword: String
@@ -29,8 +30,16 @@ input OptionsInput {
   url: String
   email: String
   icp: String
+  meta: MetaInput
+}
+
+input MetaInput {
+  likes: Int
 }
 
 type Meta {
   likes: Int
 }
+
+scalar ObjectID
+scalar Date

@@ -2,9 +2,10 @@ import { Test } from '@nestjs/testing';
 
 import { OptionsModule } from '../options.module';
 import { OptionsService } from '../options.service';
-import { getModelToken } from '@nestjs/mongoose';
 
 import mongoose from 'mongoose';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Options } from '../options.entity';
 
 describe('options', () => {
   let optionsService: OptionsService;
@@ -14,7 +15,13 @@ describe('options', () => {
       findOne() {
         return { username: 'jkchao' };
       },
-      findByIdAndUpdate() {
+      findOneAndUpdate() {
+        return { value: 'jkchao' };
+      },
+      create() {
+        // ..
+      },
+      save() {
         return { username: 'jkchao' };
       }
     };
@@ -23,7 +30,7 @@ describe('options', () => {
       const module = await Test.createTestingModule({
         imports: [OptionsModule]
       })
-        .overrideProvider(getModelToken('Options'))
+        .overrideProvider(getRepositoryToken(Options))
         .useValue(mockRepository)
         .compile();
 
@@ -35,37 +42,14 @@ describe('options', () => {
       expect(res).toMatchObject(mockRepository.findOne());
     });
 
-    it('updateOptions', async () => {
-      const res = await optionsService.updateOptions({ id: '12345' });
-      expect(res).toMatchObject(mockRepository.findByIdAndUpdate());
-    });
-
-    afterAll(async () => {
-      await mongoose.disconnect();
-    });
-  });
-
-  describe('class', () => {
-    class MockRepository {
-      public save() {
-        return { username: 'jkchao' };
-      }
-    }
-
-    beforeAll(async () => {
-      const module = await Test.createTestingModule({
-        imports: [OptionsModule]
-      })
-        .overrideProvider(getModelToken('Options'))
-        .useValue(MockRepository)
-        .compile();
-
-      optionsService = module.get<OptionsService>(OptionsService);
+    it('updateOptions width id', async () => {
+      const res = await optionsService.updateOptions({ _id: '59ef13f0a3ad094f5d294da3' });
+      expect(res).toBe('jkchao');
     });
 
     it('updateOptions', async () => {
-      const res = await optionsService.updateOptions({ url: '12345' });
-      expect(res).toMatchObject({ username: 'jkchao' });
+      const res = await optionsService.updateOptions({ title: '' });
+      expect(res).toMatchObject(mockRepository.save());
     });
 
     afterAll(async () => {

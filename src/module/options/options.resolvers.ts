@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { OptionsService } from './options.service';
-import { OptionsInfo } from './interface/options.interface';
 import { Info } from './decorators/options.decorators';
+import { OptionsDto } from './dto/options.dto';
 
 @Resolver('Options')
 export class OptionsResolver {
@@ -13,7 +13,7 @@ export class OptionsResolver {
   }
 
   @Mutation()
-  public updateOptions(@Info() optionsInfo: OptionsInfo) {
+  public updateOptions(@Info() optionsInfo: OptionsDto) {
     return this.optionsService.updateOptions(optionsInfo);
   }
 }

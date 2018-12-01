@@ -1,20 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { OptionsModel, OptionsInfo } from './interface/options.interface';
+
+import { InjectRepository } from '@nestjs/typeorm';
+import { Options } from './options.entity';
+import { MongoRepository } from 'typeorm';
+
+import { ObjectID } from 'mongodb';
+import { OptionsDto } from './dto/options.dto';
 
 @Injectable()
 export class OptionsService {
-  constructor(@InjectModel('Options') private readonly optionsModel: Model<OptionsModel>) {}
+  constructor(@InjectRepository(Options) private readonly optionsRepository: MongoRepository<Options>) {}
 
   public getOptions() {
-    return this.optionsModel.findOne();
+    return this.optionsRepository.findOne();
   }
 
-  public updateOptions(options: OptionsInfo) {
-    if (options.id) {
-      return this.optionsModel.findByIdAndUpdate(options.id, options, { new: true });
+  public async updateOptions(options: OptionsDto) {
+    if (options._id) {
+      const id = options._id;
+      delete options._id;
+      const result = await this.optionsRepository.findOneAndUpdate(
+        { _id: new ObjectID(id) },
+        { $set: { ...options, update_time: new Date() } },
+        { returnOriginal: false }
+      );
+      return result.value;
     }
-    return new this.optionsModel(options).save();
+    const result = await this.optionsRepository.create({ create_time: new Date(), ...options });
+    return this.optionsRepository.save(result);
   }
 }
