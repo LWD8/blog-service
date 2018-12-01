@@ -29,7 +29,8 @@ export class AuthService {
    * @param auth { username password }
    */
   public async create(auth: AuthDto) {
-    return await this.authRepository.create(auth);
+    const user = await this.authRepository.create(auth);
+    return this.authRepository.save(user);
   }
 
   public async update(auth: InfoRequerdIdDto) {

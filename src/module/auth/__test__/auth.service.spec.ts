@@ -21,6 +21,9 @@ describe('authServices', () => {
     },
     findOneAndUpdate() {
       return { value: 'jkchao' };
+    },
+    save() {
+      return { username: 'jkchao' };
     }
   };
 

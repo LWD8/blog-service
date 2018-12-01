@@ -5,9 +5,6 @@ import { INestApplication } from '@nestjs/common';
 import { AuthModule } from '../auth.module';
 import { AuthService } from '../auth.service';
 
-import { MongooseModule } from '@nestjs/mongoose';
-import { config } from '../../../config';
-
 import mongoose from 'mongoose';
 import { GraphQLModule } from '@nestjs/graphql';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
