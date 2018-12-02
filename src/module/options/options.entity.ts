@@ -1,4 +1,4 @@
-import { Entity, Column, ObjectIdColumn, ObjectID, UpdateDateColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, ObjectID, UpdateDateColumn, CreateDateColumn, BeforeUpdate } from 'typeorm';
 
 @Entity()
 export class Options {
@@ -29,8 +29,13 @@ export class Options {
   public meta: object;
 
   @CreateDateColumn()
-  public create_time: Date;
+  public create_time = new Date();
 
   @UpdateDateColumn()
-  public update_time: Date;
+  public update_time = new Date();
+
+  @BeforeUpdate()
+  public update() {
+    this.update_time = new Date();
+  }
 }

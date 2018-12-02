@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Options } from './options.entity';
@@ -22,18 +22,11 @@ export class OptionsService {
    * 更新网站信息
    * @param options
    */
-  public async updateOptions(options: OptionsDto) {
+  public async updateOptions(options: Options) {
     if (options._id) {
-      const id = options._id;
-      delete options._id;
-      const result = await this.optionsRepository.findOneAndUpdate(
-        { _id: new ObjectID(id) },
-        { $set: { ...options, update_time: new Date() } },
-        { returnOriginal: false }
-      );
-      return result.value;
+      return await this.optionsRepository.save(options);
     }
-    const result = await this.optionsRepository.create({ create_time: new Date(), ...options });
+    const result = await this.optionsRepository.create(options);
     return this.optionsRepository.save(result);
   }
 }

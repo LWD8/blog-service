@@ -2,7 +2,8 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { OptionsService } from './options.service';
 import { Info } from './decorators/options.decorators';
 import { OptionsDto } from './dto/options.dto';
-
+import { plainToClass } from 'class-transformer';
+import { Options } from './options.entity';
 @Resolver('Options')
 export class OptionsResolver {
   constructor(private readonly optionsService: OptionsService) {}
@@ -20,6 +21,6 @@ export class OptionsResolver {
    */
   @Mutation()
   public updateOptions(@Info() optionsInfo: OptionsDto) {
-    return this.optionsService.updateOptions(optionsInfo);
+    return this.optionsService.updateOptions(plainToClass(Options, optionsInfo));
   }
 }
